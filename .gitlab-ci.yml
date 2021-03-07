@@ -6,69 +6,10 @@ before_script:
 
 stages:
   - test
-  - build
-  - deploy
 
 tests:
   stage: test
   script:
     - sh ./scripts/test.sh
   tags:
-    - build
     - test
-
-build-stag:
-  stage: build
-  script:
-    - TAG=stag FRONTEND_ENV=staging sh ./scripts/build-push.sh
-  only:
-    - master
-  tags:
-    - build
-    - test
-    
-build-prod:
-  stage: build
-  script:
-    - TAG=prod FRONTEND_ENV=production sh ./scripts/build-push.sh
-  only:
-    - production
-  tags:
-    - build
-    - test
-
-deploy-stag:
-  stage: deploy
-  script: 
-    - >
-      DOMAIN=stag.tusky.org
-      TRAEFIK_TAG=stag.tusky.org
-      STACK_NAME=stag-tusky-org
-      TAG=stag
-      sh ./scripts/deploy.sh
-  environment:
-    name: staging
-    url: https://stag.tusky.org
-  only:
-    - master
-  tags:
-    - swarm
-    - stag
-
-deploy-prod:
-  stage: deploy
-  script:
-    - >
-      DOMAIN=tusky.org
-      TRAEFIK_TAG=tusky.org
-      STACK_NAME=tusky-org
-      TAG=prod
-      sh ./scripts/deploy.sh
-  environment:
-    name: production
-    url: https://tusky.org
-  only:
-    - production
-  tags:
-    - swarm
-    - prod
