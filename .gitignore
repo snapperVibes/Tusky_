@@ -2,4 +2,7 @@
 .mypy_cache
 docker-stack.yml
 
+# IDE
 .idea
+# Windows CI runner. https://docs.gitlab.com/runner/install/windows.html
+gitlab-runner.exe
